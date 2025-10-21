@@ -1,0 +1,130 @@
+﻿@model ContractMonthlyClaimSystem_PartTWO.Models.Claim
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Lecturer</h4>
+<hr />
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">New Lecturer Claim</h3>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create" method="post" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="LecturerRefID" class="form-label">Lecturer Ref. ID</label>
+                        <input asp-for="LecturerRefID" class="form-control" placeholder="Enter your reference ID..." />
+                        <span asp-validation-for="LecturerRefID" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="FirstName" class="form-label">First Name</label>
+                        <input asp-for="FirstName" class="form-control" placeholder="Enter your first name..." />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="LastName" class="form-label">Last Name</label>
+                        <input asp-for="LastName" class="form-control" placeholder="Enter your last name..." />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Faculty" class="form-label">Faculty</label>
+                        <select asp-for="Faculty" class="form-select">
+                            <option value="">--- Select Faculty ---</option>
+                            <option>Arts</option>
+                            <option>Commerce</option>
+                            <option>Computer Science</option>
+                            <option>Engineering</option>
+                            <option>Accounting</option>
+                            <option>Law</option>
+                        </select>
+                        <span asp-validation-for="Faculty" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="ClaimName" class="form-label">Claim Name</label>
+                        <input asp-for="ClaimName" class="form-control" placeholder="Enter claim name..." />
+                        <span asp-validation-for="ClaimName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Amount" class="form-label"></label>
+                        <input asp-for="Amount" type="number" step="0.01" class="form-control" placeholder="Enter claim amount e.g: 4687.95" />
+                        <span asp-validation-for="Amount" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="StartDate" class="form-label">Start Date</label>
+                        <input asp-for="StartDate" input type="date" class="form-control" />
+                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="EndDate" class="form-label">End Date</label>
+                        <input asp-for="EndDate" input type="date" class="form-control" />
+                        <span asp-validation-for="EndDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="HoursWorked" class="form-label">Hours Worked</label>
+                        <input asp-for="HoursWorked" input type="number" class="form-control" />
+                        <span asp-validation-for="HoursWorked" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="HourlyRate" class="form-label"></label>
+                        <input asp-for="HourlyRate" type="number" step="0.01" class="form-control" placeholder="Enter hourly rate e.g: 4.55" />
+                        <span asp-validation-for="HourlyRate" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label">Description</label>
+                        <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter claim description"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label">Email</label>
+                        <textarea asp-for="Email" class="form-control" input type="email" placeholder="Enter email..."></textarea>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="ContactNum" class="form-label">Contact Number</label>
+                        <textarea asp-for="ContactNum" class="form-control" input type="tel" placeholder="Enter contact Number..."></textarea>
+                        <span asp-validation-for="ContactNum" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label name="document" class="form-label">Supporting Documents</label>
+                        <input type="file" name="documents" class="form-control" accept=".pdf,.txt,.docx,.xlsx" />
+                        <small class="form-text text-muted">Upload supporting documents</small>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a asp-action="Index" class="btn btn-secondary me-md-2">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Add Claim</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+
+

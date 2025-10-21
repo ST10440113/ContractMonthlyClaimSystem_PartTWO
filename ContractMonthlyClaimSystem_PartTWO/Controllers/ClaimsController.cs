@@ -32,7 +32,7 @@ namespace ContractMonthlyClaimSystem_PartTWO.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add()
+        public IActionResult Create()
         {
 
             return View();
@@ -40,7 +40,7 @@ namespace ContractMonthlyClaimSystem_PartTWO.Controllers
        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Add(Claim claim, List<IFormFile> documents)
+        public async Task<IActionResult> Create(Claim claim, List<IFormFile> documents)
         {
             try
             {

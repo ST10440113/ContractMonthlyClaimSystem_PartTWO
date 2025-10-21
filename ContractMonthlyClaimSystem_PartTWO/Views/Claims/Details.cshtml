@@ -1,0 +1,140 @@
+﻿@model ContractMonthlyClaimSystem_PartTWO.Models.Claim
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Claim Details</h1>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4>Claim Number: @("CID" + Model.ClaimId)</h4>
+                <span class="badge bg-warning">Pending Review</span>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-sm-4"><strong>Lecturer Reference ID:</strong></div>
+                    <div class="col-sm-8">@Model.LecturerRefID</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-4"><strong>First Name:</strong></div>
+                    <div class="col-sm-8">@Model.FirstName</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-4"><strong>Last Name:</strong></div>
+                    <div class="col-sm-8">@Model.LastName</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-4"><strong>Faculty:</strong></div>
+                    <div class="col-sm-8">@Model.Faculty</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-4"><strong>Claim Name:</strong></div>
+                    <div class="col-sm-8">@Model.ClaimName</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-4"><strong>Claim Amount:</strong></div>
+                    <div class="col-sm-8">@($"{Model.Amount:C}")</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-4"><strong>Claim Cover - Start Date:</strong></div>
+                    <div class="col-sm-8">@Model.StartDate.ToString("yyyy-MM-dd")</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-4"><strong>Claim Cover - End Date:</strong></div>
+                    <div class="col-sm-8">@Model.EndDate.ToString("yyyy-MM-dd")</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-4"><strong>Hours Worked:</strong></div>
+                    <div class="col-sm-8">@Model.HoursWorked</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-4"><strong>Hourly Rate:</strong></div>
+                    <div class="col-sm-8">@($"{Model.HourlyRate:C} per hour")</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-4"><strong>Description:</strong></div>
+                    <div class="col-sm-8">@Model.Description</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-4"><strong>Contact Number:</strong></div>
+                    <div class="col-sm-8">@Model.ContactNum</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-4"><strong>Email Address:</strong></div>
+                    <div class="col-sm-8">@Model.Email</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card">
+
+            <div class="card-body">
+                <div class="list-group list-group-flush">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5> Supporting Documents (@Model.UploadedFiles.Count)</h5>
+                                </div>
+                                <div class="card-body">
+                                    @if (Model.UploadedFiles.Count == 0)
+                                    {
+                                        <p class="text-muted">No documents uploaded.</p>
+                                    }
+b
+                                    else
+                                    {
+                                    <div class="list-group">
+                                        @foreach (var doc in Model.UploadedFiles)
+                                        {
+                                            <div class="list-group-item">
+                                                <strong>@doc.FileName</strong>
+                                                <br>
+                                                <small>@(doc.FileSize / 1024) KB</small>
+                                                <br>
+                                                <a href="/Lecturers/DownloadDocument?claimId=@Model.ClaimId&docId=@doc.Id"
+                                                   class="btn btn-sm btn-primary mt-2">
+                                                    Download
+                                                </a>
+                                            </div>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Review Comments -->
+<div class="card mt-3">
+    <div class="card-header">Review Comments</div>
+    <div class="card-body">
+        <small class="text-muted">No review comments available</small>
+    </div>
+</div>
+
+<br />
+<a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
