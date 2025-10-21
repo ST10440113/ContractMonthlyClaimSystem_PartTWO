@@ -1,0 +1,104 @@
+﻿@model List<ContractMonthlyClaimSystem_PartTWO.Models.Claim>
+
+@{
+    ViewData["Title"] = "Academic Manager Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Academic Manager Dashboard</h2>
+    <div>
+        <span class="badge bg-warning">Pending: @ViewBag.PendingCount</span>
+        <span class="badge bg-success">Approved: @ViewBag.ApprovedCount</span>
+        <span class="badge bg-danger">Declined: @ViewBag.DeclinedCount</span>
+        <span class="badge bg-info">Verified: @ViewBag.VerifiedCount</span>
+    </div>
+</div>
+
+<!-- Navigation Tabs -->
+<ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+        <a class="nav-link @(ViewBag.Filter == "all" ? "active" : "")" href="/Manager?filter=all">
+            All Claims (@Model.Count)
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @(ViewBag.Filter == "pending" ? "active" : "")" href="/Manager?filter=pending">
+            Pending (@ViewBag.PendingCount)
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @(ViewBag.Filter == "approved" ? "active" : "")" href="/Manager?filter=approved">
+            Approved (@ViewBag.ApprovedCount)
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @(ViewBag.Filter == "declined" ? "active" : "")" href="/Manager?filter=declined">
+            Declined (@ViewBag.DeclinedCount)
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @(ViewBag.Filter == "verified" ? "active" : "")" href="/Manager?filter=verified">
+            Verified (@ViewBag.VerifiedCount)
+        </a>
+    </li>
+</ul>
+
+<!-- Table of Claims -->
+<div class="card">
+    <div class="card-body">
+        @if (Model == null || !Model.Any())
+        {
+            <div class="text-muted">No claims available.</div>
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Submitted by</th>
+                        <th>Faculty</th>
+                        <th>Claim Amount</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Submission Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var claim in Model)
+                    {
+                        <tr>
+                            <td>@claim.LecturerRefID</td>
+                            <td>@claim.Faculty</td>
+                            <td>@claim.Amount</td>
+                            <td>@claim.StartDate.ToString("yyyy-MM-dd")</td>
+                            <td>@claim.EndDate.ToString("yyyy-MM-dd")</td>
+                            <td>@claim.SubmittedDate.("yyyy-MM-dd")</td>
+                            <td>
+                                @if (claim.Status == ContractMonthlyClaimSystem_PartTWO.Models.ClaimStatus.Pending)
+                                {
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                }
+                                else if (claim.Status == ContractMonthlyClaimSystem_PartTWO.Models.ClaimStatus.Approved)
+                                {
+                                    <span class="badge bg-success">Approved</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Declined</span>
+                                }
+                            </td>
+                            <td>
+                                <a href="/Manager/Review/@claim.ClaimId" class="btn btn-sm btn-outline-primary">
+                                    @(claim.Status == ContractMonthlyClaimSystem_PartTWO.Models.ClaimStatus.Pending ? "Review" : "View")
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

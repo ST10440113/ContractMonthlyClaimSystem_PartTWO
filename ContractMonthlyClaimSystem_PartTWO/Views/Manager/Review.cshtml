@@ -1,0 +1,175 @@
+﻿@model ContractMonthlyClaimSystem_PartTWO.Models.Claim
+
+@{
+    ViewBag.Title = "Review";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger"> @TempData["Error"]</div>
+}
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header d-flex">
+                <h4><strong>CID</strong><strong>@Model.ClaimId</strong></h4>
+                <div>
+                    @if (Model.Status == ContractMonthlyClaimSystem_PartTWO.Models.ClaimStatus.Pending)
+                    {
+                        <span class="badge bg-warning fs-6"> Pending</span>
+                    }
+                    else if (Model.Status == ContractMonthlyClaimSystem_PartTWO.Models.ClaimStatus.Approved)
+                    {
+                        <span class="badge bg-success fs-6">Approved</span>
+                    }
+                    else if (Model.Status == ContractMonthlyClaimSystem_PartTWO.Models.ClaimStatus.Declined)
+                    {
+                        <span class="badge bg-danger fs-6"> Declined</span>
+                    }
+                    else 
+                    {
+                        <span class="badge bg-info fs-6">Verifed</span>
+                    }
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-sm-3"><strong>Claim Name</strong></div>
+                    <div class="col-sm-9">@Model.ClaimName</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3"><strong>Lecturer First Name</strong></div>
+                    <div class="col-sm-9">@Model.FirstName</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3"><strong>Lecturer Last Name</strong></div>
+                    <div class="col-sm-9">@Model.LastName</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3"><strong>Lecturer First Name</strong></div>
+                    <div class="col-sm-9">@Model.FirstName</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3"><strong>Faculty</strong></div>
+                    <div class="col-sm-9">@Model.Faculty</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3"><strong>Claim Amount</strong></div>
+                    <div class="col-sm-9">@Model.Amount</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3"><strong>Start Date</strong></div>
+                    <div class="col-sm-9">@Model.StartDate.ToString("yyyy-MM-dd")</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3"><strong>End Date</strong></div>
+                    <div class="col-sm-9">@Model.EndDate.ToString("yyyy-MM-dd")</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3"><strong>Hours Worked</strong></div>
+                    <div class="col-sm-9">@Model.HoursWorked</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3"><strong>Hourly Rate</strong></div>
+                    <div class="col-sm-8">@($"{Model.HourlyRate:C} per hour")</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-3"><strong>Description</strong></div>
+                    <div class="col-sm-9">@Model.Description</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3"><strong>Contact Number:</strong></div>
+                    <div class="col-sm-9">@Model.ContactNum</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-3"><strong>Email Address:</strong></div>
+                    <div class="col-sm-9">@Model.Email</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                @if (Model.Status == ContractMonthlyClaimSystem_PartTWO.Models.ClaimStatus.Pending)
+                {
+                    <hr class="my-4">
+                    <h5>Submit Your Review</h5>
+
+                    <form asp-action="Approve" method="post" class="mb-3">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@Model.ClaimId" />
+
+                        <div class="mb-3">
+                            <label class="form-label">Approval Comments (Optional)</label>
+                            <textarea name="comments" class="form-control" rows="3" placeholder="Add any comments about why this book is approved..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-success btn-lg">
+                            Approve Book
+                        </button>
+                    </form>
+
+                    <form asp-action="Decline" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@Model.ClaimId" />
+
+                        <div class="mb-3">
+                            <label class="form-label">Reason for Declining *</label>
+                            <textarea name="comments" class="form-control" rows="3" placeholder="Please provide detailed reasons for declining..." required></textarea>
+                            <small class="form-text text-muted">This will be visible to the librarian who submitted the book.</small>
+                        </div>
+
+                        <button type="submit" class="btn btn-danger btn-lg">
+                            Decline Claim
+                        </button>
+                        <a href="/Managers" class="btn btn-secondary btn-lg">Cancel</a>
+                    </form>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h5> Supporting Documents (@Model.UploadedFiles.Count)</h5>
+            </div>
+            <div class="card-body">
+                @if (Model.UploadedFiles.Count == 0)
+                {
+                    <p class="text-muted">No documents uploaded.</p>
+                }
+                else
+                {
+                    <div class="list-group">
+                        @foreach (var doc in Model.UploadedFiles)
+                        {
+                            <div class="list-group-item">
+                                <strong>@doc.FileName</strong>
+                                <span class="badge bg-success"> Encrypted</span>
+                                <br>
+                                <small>@(doc.FileSize / 1024) KB</small>
+                                <br>
+                                <a href="/Lecturers/DownloadDocument?bookId=@Model.ClaimId&docId=@doc.Id"
+                                   class="btn btn-sm btn-primary mt-2">
+                                    Download & Decrypt
+                                </a>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
