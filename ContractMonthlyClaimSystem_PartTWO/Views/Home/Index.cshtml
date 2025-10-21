@@ -1,8 +1,59 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div ="row">
+    <div class="text-center">
+        <h1 class="display-4">
+            Contract Monthly Claim System
+        </h1>
+    </div>
 </div>
+
+<!--Lecturer Section-->
+<div class="row">
+    <div class="card">
+        <div class="card-body text-center">
+            <h3 class="card-title">
+                Lecturer Dashboard
+            </h3>
+            <p class="card-text">
+                Submit claims, manage your collection and upload documents
+            </p>
+            <a href="/Claims" class="btn btn-primary">Manage My Claims</a>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="card">
+        <div class="card-body text-center">
+            <h3 class="card-title">
+                Academic Manager Dashboard
+            </h3>
+            <p class="card-text">
+                View, Approve or Decline submitted claims
+            </p>
+            <a href="/Manager" class="btn btn-primary">Review Claims</a>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="card">
+        <div class="card-body text-center">
+            <h3 class="card-title">
+                Programme Coordinator Dashboard
+            </h3>
+            <p class="card-text">
+                View, Verify or Decline submitted claims
+            </p>
+            <a href="/Coordinator" class="btn btn-primary">Verify Claims</a>
+        </div>
+    </div>
+
+</div>
+
