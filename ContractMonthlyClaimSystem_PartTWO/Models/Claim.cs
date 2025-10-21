@@ -31,14 +31,14 @@ namespace ContractMonthlyClaimSystem_PartTWO.Models
     public string Description { get; set; }
     public string Email { get; set; }
 
-    public DateTime? SubmittedDate { get; set; }
+    public DateTime SubmittedDate { get; set; }
 
-    public int? SubmittedBy { get; set; }
+    public int SubmittedBy { get; set; }
 
     public ClaimStatus Status { get; set; }
 
-    public string? ReviewedBy { get; set; }
-    public DateTime? ReviewedDate { get; set; }
+    public string ReviewedBy { get; set; }
+    public DateTime ReviewedDate { get; set; }
 
     public string ContactNum { get; set; }
     public List<FileModel> UploadedFiles { get; set; } = new List<FileModel>();
